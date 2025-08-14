@@ -18,7 +18,7 @@
 
     <main class="main-content">
         <div class="content-wrapper">
-            <h2>Área Central com ddddd</h2>
+            <h2>Área Central com eeeeee</h2>
             <p>Esta é a área central que contém conteúdo com scroll. O header permanece fixo no topo e o footer fica na parte inferior.</p>
             
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -82,9 +82,8 @@
                     const footerPosition = height - footerHeight;
                     
                     // Ajusta o footer para ficar exatamente em cima do teclado
-                    footer.style.bottom = '0px';
+                    footer.style.bottom = footerPosition + 'px';
                     footer.style.position = 'fixed';
-                    footer.style.transform = `translateY(-${footerPosition}px)`;
                     
                     console.log(`Layout ajustado - Altura: ${height}, Disponível: ${availableHeight}, Posição Footer: ${footerPosition}, Método: ${keyboardDetectionMethod}`);
                 }
@@ -98,7 +97,6 @@
                 // Restaura posição normal do footer
                 footer.style.bottom = '';
                 footer.style.position = '';
-                footer.style.transform = '';
                 
                 console.log('Layout restaurado ao normal');
             }

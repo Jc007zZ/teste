@@ -253,9 +253,6 @@ body {
 
 .keyboard-open .footer {
     height: 70px;
-    position: fixed !important;
-    bottom: 0 !important;
-    transform: none !important;
 }
 
 /* Estilos específicos para mobile quando teclado estiver aberto */
@@ -266,9 +263,6 @@ body {
     
     .keyboard-open .footer {
         height: 70px;
-        position: fixed !important;
-        bottom: 0 !important;
-        transform: none !important;
     }
 }
 
