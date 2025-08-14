@@ -62,6 +62,7 @@ body {
     overflow-y: auto; /* Único elemento com scroll */
     background-color: white;
     padding: 20px;
+    transition: bottom 0.3s ease; /* Transição suave para mudanças de altura */
 }
 
 .content-wrapper {
@@ -94,6 +95,7 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    transition: height 0.3s ease; /* Transição suave para mudanças de altura */
 }
 
 .input-container {
@@ -207,18 +209,6 @@ body {
     }
 }
 
-/* Estilos para quando o teclado virtual estiver aberto */
-@media (max-height: 500px) {
-    .footer {
-        position: absolute; /* Muda para absolute quando teclado abre */
-        bottom: 0;
-    }
-    
-    .main-content {
-        bottom: 70px; /* Ajusta altura quando footer muda posição */
-    }
-}
-
 /* Estilos para orientação landscape em mobile */
 @media (max-width: 768px) and (orientation: landscape) {
     .header {
@@ -252,4 +242,13 @@ body {
 
 .main-content::-webkit-scrollbar-thumb:hover {
     background: #5a6fd8;
+}
+
+/* Classe para quando o teclado estiver aberto */
+.keyboard-open .main-content {
+    bottom: 70px !important;
+}
+
+.keyboard-open .footer {
+    height: 70px;
 }

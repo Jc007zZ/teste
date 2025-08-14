@@ -49,5 +49,73 @@
             <button class="send-button">Enviar</button>
         </div>
     </footer>
+
+    <script>
+        // Função para detectar mudanças na viewport e ajustar o layout
+        function adjustLayoutForKeyboard() {
+            const body = document.body;
+            const mainContent = document.querySelector('.main-content');
+            const footer = document.querySelector('.footer');
+            const footerInput = document.querySelector('.footer-input');
+            
+            // Altura inicial da viewport
+            let initialViewportHeight = window.innerHeight;
+            let currentViewportHeight = window.innerHeight;
+            
+            // Função para verificar se o teclado está aberto
+            function checkKeyboardStatus() {
+                currentViewportHeight = window.innerHeight;
+                
+                // Se a altura diminuiu significativamente, provavelmente o teclado abriu
+                if (currentViewportHeight < initialViewportHeight * 0.7) {
+                    body.classList.add('keyboard-open');
+                    
+                    // Ajusta a área central para se adaptar ao teclado
+                    const headerHeight = window.innerWidth <= 768 ? 60 : 70;
+                    const footerHeight = 70;
+                    const availableHeight = currentViewportHeight - headerHeight - footerHeight;
+                    
+                    mainContent.style.bottom = footerHeight + 'px';
+                    mainContent.style.height = availableHeight + 'px';
+                } else {
+                    body.classList.remove('keyboard-open');
+                    
+                    // Restaura o layout normal
+                    mainContent.style.bottom = '';
+                    mainContent.style.height = '';
+                }
+            }
+            
+            // Eventos para detectar mudanças na viewport
+            window.addEventListener('resize', checkKeyboardStatus);
+            window.addEventListener('orientationchange', () => {
+                // Aguarda a mudança de orientação e verifica novamente
+                setTimeout(() => {
+                    initialViewportHeight = window.innerHeight;
+                    checkKeyboardStatus();
+                }, 100);
+            });
+            
+            // Eventos específicos para mobile
+            footerInput.addEventListener('focus', () => {
+                // Aguarda um pouco para o teclado abrir
+                setTimeout(checkKeyboardStatus, 300);
+            });
+            
+            footerInput.addEventListener('blur', () => {
+                // Aguarda um pouco para o teclado fechar
+                setTimeout(checkKeyboardStatus, 300);
+            });
+            
+            // Verificação inicial
+            checkKeyboardStatus();
+        }
+        
+        // Inicializa quando a página carregar
+        document.addEventListener('DOMContentLoaded', adjustLayoutForKeyboard);
+        
+        // Também executa quando a página estiver totalmente carregada
+        window.addEventListener('load', adjustLayoutForKeyboard);
+    </script>
 </body>
 </html>
