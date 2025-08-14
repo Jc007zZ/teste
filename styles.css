@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    height: 100vh;
+    overflow: hidden; /* Remove scroll do body */
+}
+
+/* Header fixo no topo */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.header nav a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Área central com scroll */
+.main-content {
+    position: fixed;
+    top: 70px; /* Altura do header */
+    left: 0;
+    right: 0;
+    bottom: 80px; /* Altura do footer */
+    overflow-y: auto; /* Único elemento com scroll */
+    background-color: white;
+    padding: 20px;
+}
+
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-wrapper h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.content-wrapper p {
+    margin-bottom: 15px;
+    text-align: justify;
+    font-size: 1rem;
+}
+
+/* Footer com input */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.footer-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.footer-input:focus {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+}
+
+.send-button {
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.send-button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para mobile */
+@media (max-width: 768px) {
+    .header {
+        height: 60px;
+        padding: 0 15px;
+    }
+    
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .header nav {
+        gap: 10px;
+    }
+    
+    .header nav a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .main-content {
+        top: 60px;
+        bottom: 70px;
+        padding: 15px;
+    }
+    
+    .content-wrapper h2 {
+        font-size: 1.5rem;
+    }
+    
+    .footer {
+        height: 70px;
+        padding: 10px 15px;
+    }
+    
+    .input-container {
+        max-width: 100%;
+    }
+    
+    .footer-input {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .send-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Estilos para telas muito pequenas */
+@media (max-width: 480px) {
+    .header nav {
+        display: none; /* Oculta navegação em telas muito pequenas */
+    }
+    
+    .header {
+        justify-content: center;
+    }
+    
+    .main-content {
+        padding: 10px;
+    }
+    
+    .content-wrapper h2 {
+        font-size: 1.3rem;
+    }
+    
+    .content-wrapper p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Estilos para quando o teclado virtual estiver aberto */
+@media (max-height: 500px) {
+    .footer {
+        position: absolute; /* Muda para absolute quando teclado abre */
+        bottom: 0;
+    }
+    
+    .main-content {
+        bottom: 70px; /* Ajusta altura quando footer muda posição */
+    }
+}
+
+/* Estilos para orientação landscape em mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .header {
+        height: 50px;
+    }
+    
+    .main-content {
+        top: 50px;
+        bottom: 60px;
+    }
+    
+    .footer {
+        height: 60px;
+    }
+}
+
+/* Scrollbar personalizada para a área central */
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: #5a6fd8;
+}
