@@ -265,3 +265,8 @@ body {
         height: 70px;
     }
 }
+
+/* Otimizações para APIs modernas */
+.main-content {
+    will-change: height, bottom;
+}
