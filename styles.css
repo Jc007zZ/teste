@@ -62,7 +62,7 @@ body {
     overflow-y: auto; /* Único elemento com scroll */
     background-color: white;
     padding: 20px;
-    transition: bottom 0.3s ease; /* Transição suave para mudanças de altura */
+    transition: all 0.3s ease; /* Transição suave para todas as mudanças */
 }
 
 .content-wrapper {
@@ -96,6 +96,7 @@ body {
     justify-content: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     transition: height 0.3s ease; /* Transição suave para mudanças de altura */
+    z-index: 999;
 }
 
 .input-container {
@@ -247,8 +248,20 @@ body {
 /* Classe para quando o teclado estiver aberto */
 .keyboard-open .main-content {
     bottom: 70px !important;
+    height: auto !important;
 }
 
 .keyboard-open .footer {
     height: 70px;
+}
+
+/* Estilos específicos para mobile quando teclado estiver aberto */
+@media (max-width: 768px) {
+    .keyboard-open .main-content {
+        bottom: 70px !important;
+    }
+    
+    .keyboard-open .footer {
+        height: 70px;
+    }
 }

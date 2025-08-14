@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Layout Responsivo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,7 +18,7 @@
 
     <main class="main-content">
         <div class="content-wrapper">
-            <h2>Área Central com Scroll</h2>
+            <h2>Área Central com aaaaaaaaaaaa</h2>
             <p>Esta é a área central que contém conteúdo com scroll. O header permanece fixo no topo e o footer fica na parte inferior.</p>
             
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -51,71 +51,133 @@
     </footer>
 
     <script>
-        // Função para detectar mudanças na viewport e ajustar o layout
-        function adjustLayoutForKeyboard() {
+        (function() {
+            'use strict';
+            
+            // Elementos DOM
             const body = document.body;
             const mainContent = document.querySelector('.main-content');
             const footer = document.querySelector('.footer');
             const footerInput = document.querySelector('.footer-input');
             
-            // Altura inicial da viewport
-            let initialViewportHeight = window.innerHeight;
-            let currentViewportHeight = window.innerHeight;
+            // Variáveis de estado
+            let initialHeight = window.innerHeight;
+            let isKeyboardOpen = false;
+            let resizeTimeout;
             
-            // Função para verificar se o teclado está aberto
-            function checkKeyboardStatus() {
-                currentViewportHeight = window.innerHeight;
+            // Função para ajustar o layout
+            function adjustLayout() {
+                const currentHeight = window.innerHeight;
+                const headerHeight = window.innerWidth <= 768 ? 60 : 70;
+                const footerHeight = 70;
                 
-                // Se a altura diminuiu significativamente, provavelmente o teclado abriu
-                if (currentViewportHeight < initialViewportHeight * 0.7) {
-                    body.classList.add('keyboard-open');
-                    
-                    // Ajusta a área central para se adaptar ao teclado
-                    const headerHeight = window.innerWidth <= 768 ? 60 : 70;
-                    const footerHeight = 70;
-                    const availableHeight = currentViewportHeight - headerHeight - footerHeight;
-                    
-                    mainContent.style.bottom = footerHeight + 'px';
-                    mainContent.style.height = availableHeight + 'px';
+                // Verifica se o teclado está aberto (altura diminuiu significativamente)
+                if (currentHeight < initialHeight * 0.75) {
+                    if (!isKeyboardOpen) {
+                        isKeyboardOpen = true;
+                        body.classList.add('keyboard-open');
+                        
+                        // Calcula altura disponível para o conteúdo
+                        const availableHeight = currentHeight - headerHeight - footerHeight;
+                        
+                        // Ajusta a área central
+                        mainContent.style.bottom = footerHeight + 'px';
+                        mainContent.style.height = availableHeight + 'px';
+                        
+                        console.log('Teclado aberto - Altura:', currentHeight, 'Disponível:', availableHeight);
+                    }
                 } else {
-                    body.classList.remove('keyboard-open');
-                    
-                    // Restaura o layout normal
-                    mainContent.style.bottom = '';
-                    mainContent.style.height = '';
+                    if (isKeyboardOpen) {
+                        isKeyboardOpen = false;
+                        body.classList.remove('keyboard-open');
+                        
+                        // Restaura layout normal
+                        mainContent.style.bottom = '';
+                        mainContent.style.height = '';
+                        
+                        console.log('Teclado fechado - Altura restaurada:', currentHeight);
+                    }
                 }
             }
             
-            // Eventos para detectar mudanças na viewport
-            window.addEventListener('resize', checkKeyboardStatus);
-            window.addEventListener('orientationchange', () => {
-                // Aguarda a mudança de orientação e verifica novamente
-                setTimeout(() => {
-                    initialViewportHeight = window.innerHeight;
-                    checkKeyboardStatus();
-                }, 100);
-            });
+            // Função para debounce do resize
+            function debouncedResize() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(adjustLayout, 100);
+            }
+            
+            // Event Listeners
+            window.addEventListener('resize', debouncedResize);
             
             // Eventos específicos para mobile
-            footerInput.addEventListener('focus', () => {
-                // Aguarda um pouco para o teclado abrir
-                setTimeout(checkKeyboardStatus, 300);
+            footerInput.addEventListener('focus', function() {
+                // Aguarda o teclado abrir
+                setTimeout(adjustLayout, 500);
             });
             
-            footerInput.addEventListener('blur', () => {
-                // Aguarda um pouco para o teclado fechar
-                setTimeout(checkKeyboardStatus, 300);
+            footerInput.addEventListener('blur', function() {
+                // Aguarda o teclado fechar
+                setTimeout(adjustLayout, 500);
             });
             
-            // Verificação inicial
-            checkKeyboardStatus();
-        }
-        
-        // Inicializa quando a página carregar
-        document.addEventListener('DOMContentLoaded', adjustLayoutForKeyboard);
-        
-        // Também executa quando a página estiver totalmente carregada
-        window.addEventListener('load', adjustLayoutForKeyboard);
+            // Mudança de orientação
+            window.addEventListener('orientationchange', function() {
+                setTimeout(function() {
+                    initialHeight = window.innerHeight;
+                    adjustLayout();
+                }, 500);
+            });
+            
+            // Visual Viewport API (mais confiável para mobile)
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', function() {
+                    const currentHeight = window.visualViewport.height;
+                    const headerHeight = window.innerWidth <= 768 ? 60 : 70;
+                    const footerHeight = 70;
+                    
+                    if (currentHeight < initialHeight * 0.75) {
+                        if (!isKeyboardOpen) {
+                            isKeyboardOpen = true;
+                            body.classList.add('keyboard-open');
+                            
+                            const availableHeight = currentHeight - headerHeight - footerHeight;
+                            mainContent.style.bottom = footerHeight + 'px';
+                            mainContent.style.height = availableHeight + 'px';
+                            
+                            console.log('VisualViewport - Teclado aberto:', currentHeight);
+                        }
+                    } else {
+                        if (isKeyboardOpen) {
+                            isKeyboardOpen = false;
+                            body.classList.remove('keyboard-open');
+                            
+                            mainContent.style.bottom = '';
+                            mainContent.style.height = '';
+                            
+                            console.log('VisualViewport - Teclado fechado:', currentHeight);
+                        }
+                    }
+                });
+            }
+            
+            // Inicialização
+            function init() {
+                initialHeight = window.innerHeight;
+                adjustLayout();
+                console.log('Layout inicializado - Altura:', initialHeight);
+            }
+            
+            // Executa quando DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+            // Executa também quando a página estiver totalmente carregada
+            window.addEventListener('load', init);
+            
+        })();
     </script>
 </body>
 </html>
