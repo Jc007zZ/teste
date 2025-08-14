@@ -95,7 +95,7 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    transition: height 0.3s ease; /* Transição suave para mudanças de altura */
+    transition: all 0.3s ease; /* Transição suave para todas as mudanças */
     z-index: 999;
 }
 
@@ -255,6 +255,7 @@ body {
     height: 70px;
     position: fixed !important;
     bottom: 0 !important;
+    transform: none !important;
 }
 
 /* Estilos específicos para mobile quando teclado estiver aberto */
@@ -267,6 +268,7 @@ body {
         height: 70px;
         position: fixed !important;
         bottom: 0 !important;
+        transform: none !important;
     }
 }
 
